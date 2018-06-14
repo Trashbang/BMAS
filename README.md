@@ -1,1 +1,1 @@
-BMAS
+Check twitter.com/BMRF_ALERTS to see it in action. Wear your security badge, and have a safe and productive day. 
