@@ -1,0 +1,229 @@
+dadeda agent coomer _comma report to topside tactical operations center
+dadeda inspection team _comma to radioactive materials handling bay
+dadeda agent sixteen _comma report to administration sub level two
+doop doctor johnson _comma please call observation tank one
+doop doctor west _comma please report to lambda reactor complex
+doop doctor cross _comma call seven two nine please
+doop sargeant bailey _comma to topside checkpoint bravo
+dadeda cryogenic safety crew _comma report status at eleven hundred please
+dadeda coded message for captain black _comma command and communication center
+dadeda sector c science personnel _comma report to anomalous materials test lab
+doop doctor freeman _comma to anomalous materials test lab immediately
+bloop attention _comma experimental propulsion lab test fire in ninety minutes
+bloop hydro plant now operating at sixty percent
+bloop black mesa topside temperature is ninety three degrees
+bloop launch officer reports _comma alpha satellite deploy is nominal
+bloop doctor birdwell reports superconducting interchange is activated
+bloop attention _comma report any security violation _comma to administration sub level one
+bloop attention _comma service personnel please clear helicopter hangar one
+bloop shield inspection crew reports primary reactor nominal
+bloop transportation control reports all systems on time
+dadeda doctor victor _comma report to supercooled laser lab please
+dadeda sargeant guthrie _comma report to topside motorpool immediately
+deeoo uranium shipment inspection team _comma to sector d
+bizwarn bizwarn bizwarn warning _comma high energy detonation detected in materials lab
+buzwarn buzwarn attention _comma security personnel to sector c immediately
+buzwarn buzwarn warning _comma unauthorized biological forms detected in sector c
+buzwarn buzwarn warning _comma unauthorized biological forms detected in coolant maintenance area
+bizwarn bizwarn bizwarn any damage control team to sector c immediately
+buzwarn buzwarn warning _comma sector c elevator failure _comma do not use _comma
+bizwarn bizwarn bizwarn biohazard warning in sector b and c
+buzwarn buzwarn attention _comma sector c science personnel evacuate area immediately
+buzwarn buzwarn warning _comma flooding detected on sub level three _comma sector b
+bizwarn bizwarn bizwarn warning _comma anomalous energy field detected in administration center
+deeoo deeoo attention _comma any sector c science personnel _comma please report status
+deeoo deeoo attention _comma sector c science personnel please report status immediately
+deeoo emergency cleanup team to biological waste processing plant
+buzwarn buzwarn attention _comma administration personnel evacuate sector d immediately
+deeoo deeoo attention _comma security personnel to sector d
+deeoo service team _comma check elevator one _comma sector c
+buzwarn buzwarn warning _comma unauthorized biological forms detected in ventillation system
+deeoo lieutenant backman and cleanup team _comma to sub level three
+bizwarn bizwarn bizwarn danger _comma turret defense systems activated _comma sector d
+deeoo deeoo security officer reports men down in sector d _comma medical help required
+bizwarn bizwarn bizwarn extreme danger _comma all turret defense systems activated _comma sector d
+deeoo turret repair personnel _comma to high security materials storage area
+deeoo deeoo attention _comma electric shock hazard detected in administration center
+buzwarn buzwarn _comma security officer reports medical emergency _comma administration center 
+buzwarn buzwarn attention _comma all science personnel report topside for immediate questioning
+buzwarn buzwarn all personnel evacuate high security materials storage facility
+bizwarn bizwarn emergency uranium containment team _comma to sector d
+deeoo turret maintenance team _comma to central command and communication center
+buzwarn buzwarn military personnel _comma prosecute kilo india lima with extreme force
+bizwarn bizwarn bizwarn attention _comma this announcement system now under military command
+buzwarn buzwarn search and destroy force bravo _comma reports secondary objective terminated
+buzwarn buzwarn bravo force reports hotel sierra mike facility is secured
+bizwarn bizwarn attention _comma all military personnel _comma atomic biological chemical alert
+bizwarn bizwarn attention _comma all military personnel _comma extreme atomic biological chemical alert
+bizwarn bizwarn bizwarn attention _comma black mesa announcement system now under military command
+buzwarn buzwarn attention _comma security lockout alert _comma security door will engage _comma
+bizwarn bizwarn security door engaged _comma five _comma buzwarn _comma four _comma buzwarn _comma three _comma buzwarn _comma two _comma buzwarn _comma one _comma buzwarn _comma lockout activated
+buzwarn buzwarn _comma attention _comma experimental rocket test fire disengaged _comma
+deeoo repair crew report to track control _comma sector e
+deeoo maintenance team blue _comma check heat exchange coolant level
+deeoo maintenance team green _comma check voltage on cable seven two nine
+buzwarn buzwarn medical team to materials storage facility _comma team bravo reports men down
+buzwarn buzwarn alpha force move out _comma science personnel resistance extreme
+buzwarn buzwarn attention _comma all black mesa security personnel wanted for immediate questioning
+buzwarn buzwarn attention _comma gordon freeman report to military personnel for immediate security check
+buzwarn buzwarn warning _comma hostile biological forms detected in track control sector e
+fuel and power must be engaged to activate rocket test fire
+buzwarn buzwarn _comma warning _comma track power failure _comma check lower level power plant _comma
+deeoo maintenance team yellow _comma please service relay three hundred ninety four
+dadeda attention _comma gordon freeman report to military personnel for immediate security check
+buzwarn buzwarn delta team reports launch control secured
+bizwarn bizwarn bizwarn danger _comma turret defense systems activated _comma silo e
+deeoo sector e track control please report status
+buzwarn buzwarn echo force reports perimeter breach _comma sector e
+buzwarn buzwarn attention _comma search and destroy force go to code three _comma eliminate all biological forms _comma
+bizwarn bizwarn danger _comma unauthorized detonation detected in experimental propulsion lab
+buzwarn main power is not on
+deeoo main power is on
+buzwarn buzwarn _comma attention _comma clear silo e launch area immediately
+deeoo containment inspection team _comma to advanced biological research lab
+buzwarn buzwarn medical team to sector e _comma echo team has men down
+buzwarn buzwarn alert _comma military personnel authorized to prosecute gordon freeman with extreme force
+buzwarn buzwarn alert _comma military personnel _comma you are authorized to shoot the renegade on sight
+buzwarn buzwarn alert _comma squad in silo e _comma freeman may be operating inside your perimeter
+deeoo deeoo launch control train activity detected 
+buzwarn buzwarn medical team to sector e _comma echo team squad failed to reach checkpoint
+deeoo deeoo satellite rocket loading bay reports status green
+deeoo deeoo deeoo satellite launch system activated _comma five deeoo four deeoo three deeoo two deeoo one deeoo launch is go
+buzwarn buzwarn warning _comma emergency containment system activated
+bizwarn bizwarn _comma alert _comma biological containment breach detected
+bizwarn bizwarn _comma warning _comma biological sterilization system activated
+buzwarn buzwarn attention _comma hostile alien military force detected _comma advanced biological research lab
+buzwarn buzwarn search and destroy force reports back up required _comma engaged with extreme resistance
+buzwarn buzwarn topside containment force alert _comma hostile alien military force detected
+deeoo deeoo high power laser status is green
+bizwarn bizwarn _comma alien containment system failure _comma use sterilization chamber
+bizwarn bizwarn attention _comma all topside military personnel clear helicopter hangar four
+bizwarn bizwarn _comma hostile alien breach _comma topside checkpoint alpha _comma checkpoint delta
+buzwarn buzwarn alert topside containment force _comma use any force to prosecute gordon freeman _comma you are authorized to shoot on sight _comma
+buzwarn buzwarn alert topside containment force _comma freeman may approach your perimeter
+gordon _comma all science personnel will be terminated until you surrender
+bizwarn bizwarn sterilization system activated
+buzwarn buzwarn warning primary antenna failure detected
+buzwarn buzwarn clear topside motorpool for emergency medical helicopter
+buzwarn buzwarn warning _comma topside armory security bypass detected 
+bizwarn bizwarn warning _comma radiation leak detected in primary antenna area
+buzwarn buzwarn search and destroy force kilo _comma central command reports hostile alien force inside perimeter
+buzwarn buzwarn message for gordon freeman _comma you will not escape this time
+buzwarn buzwarn attention all units _comma renegade freeman is now your primary target
+buzwarn buzwarn alert remaining containment force _comma freeman may have experimental weapon
+buzwarn buzwarn all personnel evacuate lambda complex _comma extreme dimensional malfunction detected
+bizwarn bizwarn fire control team to topside armory _comma checkpoint delta _comma topside hydro plant
+bizwarn bizwarn warning _comma cross dimensional power field activity detected
+bizwarn bizwarn warning _comma unauthorized biological force detected in cross dimensional power field
+buzwarn buzwarn all personnel evacuate lambda complex _comma extreme dimensional malfunction detected
+bizwarn bizwarn bizwarn _comma unauthorized activity detected in main reactor core 
+bizwarn bizwarn _comma danger _comma high energy exchange detected in radioactive materials handling bay
+bizwarn bizwarn _comma biological force detected in primary coolant system
+bizwarn bizwarn _comma lambda complex reports dimensional contamination
+bizwarn bizwarn _comma lambda complex reports dimensional containment system failure
+bloop bloop satellite target system _comma engaged
+bizwarn bizwarn bizwarn warning _comma cross dimensional portal device power level is one hundred twenty percent
+bizwarn bizwarn bizwarn _comma attention lambda complex personnel _comma primary core activated
+five seconds remaining
+ten seconds remaining
+fifteen seconds remaining
+twenty seconds remaining
+access denied
+access is denied
+unauthorized access
+illegal access
+this door is locked
+unauthorized access
+entry forbidden
+entry not permitted
+no unauthorized personnel
+you do not have access to this facility
+sorry _comma you may not enter
+sorry _comma this door is locked
+please _comma move away from this area
+please _comma move away from door
+you will not get in
+entry is not an option
+will we do this all day
+move on immediately
+no _comma no _comma and no
+access granted
+access permitted
+entry granted
+entry permitted
+access authorized
+entry is permitted
+access authorized
+access to facility _comma granted
+access granted
+security lock is engaged
+secure area _comma no entry
+security lockout _comma no entry
+secure door _comma no entry
+security system in force
+security system armed _comma no entry
+door is secured
+illegal access _comma move away
+security lock disengaged
+security clear _comma proceed
+security lockout _comma released
+secure override accepted
+security access acknowledged
+security system disengaged
+door security disengaged
+emergency blast door activated
+emergency blast shield activated
+the blast containment shield is down
+emergency blast door _comma open
+emergency blast shield _comma deactivated
+blast containment shield is _comma open
+fire containment door is down
+fire containment door _comma open
+chemical leak containment door activated
+chemical leak containment door _comma open
+radiation containment door activated
+radiation containment door _comma open
+emergency containment door engaged
+emergency containment door disengaged
+sorry _comma this door is inoperative
+sorry _comma door out of service
+door damage detected _comma please call service personnel
+no access _comma maintenance area
+no personnel permitted in maintenance area
+maintenance area access granted
+maintenance area door open
+extreme hazard _comma defense system is armed in this zone
+hazard area _comma defense system activated
+danger _comma turret perimeter defense system armed
+extreme hazard _comma nearest defense system engaged
+danger _comma base defense turret system may power up
+danger _comma automatic defense system activated
+warning _comma high voltage cable
+warning _comma high power cable
+warning _comma electric shock hazard
+warning _comma severe electric shock hazard
+danger _comma radiation leak detected
+danger _comma radiation hazard detected
+danger _comma high radiation level detected
+danger _comma severe radiation hazard _comma evacuate area immediately
+danger _comma safety violation _comma extreme radiation level detected
+danger _comma chemical leak _comma area now a high health hazard
+danger _comma chemical coolant leak _comma health hazard zone
+danger _comma chemical containment breach _comma all personnel evacuate this area
+danger _comma supercooled chemical leak
+danger _comma supercooled helium leak
+danger _comma liquid biohazard leak in immediate area
+danger _comma coolant leak _comma severe biohazard now in this area
+danger _comma liquid biohazard released _comma evacuate area
+danger _comma biohazard detected in immediate area
+three _comma two _comma one _comma deeoo
+deeoo target system deactivated
+bloop immediate medical attention required in sector twenty seven
+doop operations personnel report to emergency control zone for contamination cleanup _comma alpha seven access required
+attention _comma supply team required in lower maintenance chamber sub sector b
+doop security breach detected in silo thirty two
+warning _comma extreme radiation leak detected in reactor core eight _comma time to reach minimum safe distance _comma fourteen minutes
+dadeda doctor guthrie report to inspection lab six immediately
+attention _comma doctor Freeman report to research administration center for questioning
+deeoo remaining science personnel report to medical lab six for radiation exposure inspection
+warning _comma severe damage detected in ventillation systems under research lab two _comma evacuate area immediately
