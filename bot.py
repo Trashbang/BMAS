@@ -9,8 +9,11 @@ import time
 import datetime
 import pywintypes
 import win32evtlog
+import mwapi
+import json
 from secrets import *
 from time import gmtime, strftime, localtime
+
 
 # ====== Individual bot configuration ==========================
 bot_username = 'BMRF_ALERTS'
@@ -25,15 +28,41 @@ noises = ("bizwarn", "bloop", "buzwarn", "buzzwarn", "dadeda", "deeoo", "doop", 
 # Files containing these should be ignored completely (why are they even here???)
 ignoreFiles = ("asay", "endgame", "gotquad", "sack", "sreq", "ssay", "voxlogin")
 
+def classify_vocabulary(words):
+	# Take a list of all the words spoken by the system and classify them (noun, adj, etc).
+	# This will allow us to augment the Markov chain model by drawing parallels between words that
+	# can be potentially swapped out while still retaining grammatical sanity.
+	wordsList = words.split("\n")
+	sep = "|"
+	queryWords = sep.join(wordsList)
+	
+	# Start a wiktionary session so we can utilise its services
+	session = mwapi.Session("https://en.wiktionary.org")
+
+	# Check https://www.mediawiki.org/wiki/API and https://pythonhosted.org/mwapi
+	# if you really gotta know how this query is put together.
+	query = session.get(action='query', prop='revisions', rvprop='content', format='json', titles=queryWords)
+	pages = query['query']['pages'] # The actual pages are buried a little bit into the json 
+	
+	
+	for word in wordsList:
+		word.types = []
+		
+def lookup_word(word, session):
+	# Take a given word and look it up in the supplied wiktionary session
+	# Return the types of the word
+	pass
+	
+
 def create_model():
 	# get the list of (canonical) sentences spoken by vox
 	sentencesFile = open("sentences.txt", "r")
 	sentences = sentencesFile.read()
 	
-	# train main model and hope for the best
+	# train main model
 	mainModel = markovify.NewlineText(sentences, 2)
 	
-	# get list of all potential words (many of these don't appear in the game at all 
+	# get list of all potential words (some of these don't appear in the game at all 
 	# but I wanna use them cuz they're neat)
 	wordsFile = open("words.txt", "r")
 	words = wordsFile.read()
@@ -55,11 +84,9 @@ def create_model():
 	secondaryModel = markovify.NewlineText(combos)
 	
 	# merge models, make sure to give appropriate weighting	
-	completeModel = markovify.combine([mainModel, secondaryModel], [1.0, 0.5])
+	completeModel = markovify.combine([mainModel, secondaryModel], [1.0, 0.2])
 	
 	return completeModel
-	
-
 
 def create_tweet(model):
 	
@@ -119,13 +146,14 @@ def create_tweet(model):
 	index = random.randint(0, len(backgrounds) - 1)
 	background = backgrounds[index]
 	
+	vidPath = "output/output.mp4"
+	
 	inputFiles = {"backgrounds/" + background:None, "D:/Games/Steam/steamapps/common/Half-Life/valve/sound/vox/_BMAS_concat.wav":None}
-	outputFiles = {"output/output.mp4":"-acodec aac -vcodec libx264 -shortest"}
+	outputFiles = {vidPath:"-acodec aac -vcodec libx264 -shortest"}
 	params = "-y -loop 1"
 	ff = ffmpy.FFmpeg(global_options=params, inputs=inputFiles, outputs=outputFiles)
 	ff.run()
 		
-	vidPath = "output/output.mp4"
 	return niceText, vidPath
 
 def tweet(text, vidPath):
