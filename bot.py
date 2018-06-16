@@ -32,26 +32,29 @@ def classify_vocabulary(words):
 	# Take a list of all the words spoken by the system and classify them (noun, adj, etc).
 	# This will allow us to augment the Markov chain model by drawing parallels between words that
 	# can be potentially swapped out while still retaining grammatical sanity.
-	wordsList = words.split("\n")
-	sep = "|"
-	queryWords = sep.join(wordsList)
 	
-	# Start a wiktionary session so we can utilise its services
+	# Start a Wiktionary session so we can utilise its services
 	session = mwapi.Session("https://en.wiktionary.org")
-
-	# Check https://www.mediawiki.org/wiki/API and https://pythonhosted.org/mwapi
-	# if you really gotta know how this query is put together.
-	query = session.get(action='query', prop='revisions', rvprop='content', format='json', titles=queryWords)
-	pages = query['query']['pages'] # The actual pages are buried a little bit into the json 
 	
+	wordsList = words.split("\n")
+	queryWords = ""
+	pages = {}
+	
+	# The MediaWiki API only lets us pull up to fifty pages at a time, so we need to break this up into a few queries
+	for wordIdx in range(len(wordsList) - 1): # it's counterintuitive, but we gotta track the index for modulus
+		queryWords = queryWords + "|" + wordsList[wordIdx]
+		if (((wordIdx + 1) % 50 == 0) or (wordIdx + 1) == len(wordsList)): # Only once every fifty words, or when we reach the end
+			# Check https://www.mediawiki.org/wiki/API and https://pythonhosted.org/mwapi
+			# if you really gotta know how this query is put together.
+			# Bottom line is that we're looking up all the pages with the titles in queryWords,
+			# then pulling down the page contents
+			query = session.get(action='query', prop='revisions', rvprop='content', format='json', titles=queryWords)
+			pages.update(query['query']['pages']) # The actual pages are buried a little bit into the json 
+			queryWords = ""
+
 	
 	for word in wordsList:
 		word.types = []
-		
-def lookup_word(word, session):
-	# Take a given word and look it up in the supplied wiktionary session
-	# Return the types of the word
-	pass
 	
 
 def create_model():
