@@ -33,12 +33,21 @@ def classify_vocabulary(words):
 	# This will allow us to augment the Markov chain model by drawing parallels between words that
 	# can be potentially swapped out while still retaining grammatical sanity.
 	
+	# The applicable types of word, as defined by Wiktionary, are:
+	# - en-adj (adjectives)
+	# - en-adv (adverbs)
+	# - en-con (conjunctions)
+	# - en-noun (noun)
+	# - en-proper noun (proper nouns, like names)
+	# - en-pron (pronouns)
+	# - en-verb (verbs)
+	
 	# Start a Wiktionary session so we can utilise its services
 	session = mwapi.Session("https://en.wiktionary.org")
 	
 	wordsList = words.split("\n")
 	queryWords = ""
-	pages = {}
+	pages = []
 	
 	# The MediaWiki API only lets us pull up to fifty pages at a time, so we need to break this up into a few queries
 	for wordIdx in range(len(wordsList) - 1): # it's counterintuitive, but we gotta track the index for modulus
@@ -48,13 +57,20 @@ def classify_vocabulary(words):
 			# if you really gotta know how this query is put together.
 			# Bottom line is that we're looking up all the pages with the titles in queryWords,
 			# then pulling down the page contents
-			query = session.get(action='query', prop='revisions', rvprop='content', format='json', titles=queryWords)
-			pages.update(query['query']['pages']) # The actual pages are buried a little bit into the json 
+			query = session.get(action='query', prop='revisions', rvprop='content', format='json', formatversion='2', titles=queryWords)
+			pages.append(query['query']['pages']) # The actual pages are buried a little bit into the json 
 			queryWords = ""
 
+	# Go through pages and get word definitions
+	for page in pages:
+		word = page['title']
+		pageContent = page['revisions'][0]['content'] # Grab the content of the most recent revision (a.k.a the only revision we pulled)
+		
+		# Okay, here's where it gets messy.
+		# Wikitext is non-hierarchical. Thus, our best hope for getting the ENGLISH definition of the word
+		# is to look for headings of the form "==English==\n", then try to pull out everything between them
+		# and the next heading of the same form (or the end of the content, whatever comes first)
 	
-	for word in wordsList:
-		word.types = []
 	
 
 def create_model():
