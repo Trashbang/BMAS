@@ -11,6 +11,7 @@ import pywintypes
 import win32evtlog
 import mwapi
 import json
+import re
 from secrets import *
 from time import gmtime, strftime, localtime
 
@@ -28,19 +29,10 @@ noises = ("bizwarn", "bloop", "buzwarn", "buzzwarn", "dadeda", "deeoo", "doop", 
 # Files containing these should be ignored completely (why are they even here???)
 ignoreFiles = ("asay", "endgame", "gotquad", "sack", "sreq", "ssay", "voxlogin")
 
-def classify_vocabulary(words):
+def classifyVocabulary(words):
 	# Take a list of all the words spoken by the system and classify them (noun, adj, etc).
 	# This will allow us to augment the Markov chain model by drawing parallels between words that
 	# can be potentially swapped out while still retaining grammatical sanity.
-	
-	# The applicable types of word, as defined by Wiktionary, are:
-	# - en-adj (adjectives)
-	# - en-adv (adverbs)
-	# - en-con (conjunctions)
-	# - en-noun (noun)
-	# - en-proper noun (proper nouns, like names)
-	# - en-pron (pronouns)
-	# - en-verb (verbs)
 	
 	# Start a Wiktionary session so we can utilise its services
 	session = mwapi.Session("https://en.wiktionary.org")
@@ -48,6 +40,11 @@ def classify_vocabulary(words):
 	wordsList = words.split("\n")
 	queryWords = ""
 	pages = []
+	wordsOut = {}
+	
+	# take out noises so we don't stump Wiktionary with our dubious onomatopoeia
+	for noise in noises:
+		wordsList.remove(noise)
 	
 	# The MediaWiki API only lets us pull up to fifty pages at a time, so we need to break this up into a few queries
 	for wordIdx in range(len(wordsList) - 1): # it's counterintuitive, but we gotta track the index for modulus
@@ -57,20 +54,63 @@ def classify_vocabulary(words):
 			# if you really gotta know how this query is put together.
 			# Bottom line is that we're looking up all the pages with the titles in queryWords,
 			# then pulling down the page contents
+			queryWords = queryWords[1:] # hack off that leading pipe
+			print("Querying Wiktionary with words: " + queryWords)
 			query = session.get(action='query', prop='revisions', rvprop='content', format='json', formatversion='2', titles=queryWords)
-			pages.append(query['query']['pages']) # The actual pages are buried a little bit into the json 
+			pages.append(query['query']['pages'][0]) # The actual pages are buried a little bit into the json 
 			queryWords = ""
 
 	# Go through pages and get word definitions
 	for page in pages:
 		word = page['title']
-		pageContent = page['revisions'][0]['content'] # Grab the content of the most recent revision (a.k.a the only revision we pulled)
+		if ('missing' not in page): # 'missing' is a key given to pages that fail to return results (weird names, etc)
+			print("Classifying word: " + word)
+			pageContent = page['revisions'][0]['content'] # Grab the content of the most recent revision (a.k.a the only revision we pulled)
+			
+			# Okay, here's where it gets messy.
+			# Wikitext is non-hierarchical. Thus, our best hope for getting the ENGLISH definition of the word
+			# is to look for headings of the form "==English==", then try to pull out everything between them
+			# and the next heading of the same form (or the end of the content, whatever comes first)
+			openHeading = "[^=]==English==[^=]"
+			closeHeading = "[^=]==[^=]*==[^=]|\Z"
+			subsection = ""
+			startPoint = re.search(openHeading, pageContent)
+			if (startPoint is not None):
+				endPoint = re.search(closeHeading, pageContent[startPoint.end():])
+				subsection = pageContent[startPoint.end():endPoint.start()] # wow, that's almost beautiful
+			
+			# Now we take our English subsection and see which lexical types show up.
+			# The applicable lexical categories of word, as notated by Wiktionary, are:
+			# - en-adj (adjectives)
+			# - en-adv (adverbs)
+			# - en-con (conjunctions)
+			# - en-noun (noun)
+			# - en-proper noun (proper nouns, like names)
+			# - en-pron (pronouns)
+			# - en-verb (verbs)
+			# Surely there's a neater way to do this than a big list of conditionals?
+			lexTypes = []
+			if ("en-adj" in subsection):
+				lexTypes.append("en-adj")
+			if ("en-adv" in subsection):
+				lexTypes.append("en-adv")
+			if ("en-con" in subsection):
+				lexTypes.append("en-con")
+			if ("en-noun" in subsection):
+				lexTypes.append("en-noun")
+			if ("en-proper noun" in subsection):
+				lexTypes.append("en-proper noun")
+			if ("en-pron" in subsection):
+				lexTypes.append("en-pron")
+			if ("en-verb" in subsection):
+				lexTypes.append("en-verb")
+			
+			wordsOut.update({word:lexTypes})
+		else:
+			print("Passing over word: " + word + " (No page found)")
 		
-		# Okay, here's where it gets messy.
-		# Wikitext is non-hierarchical. Thus, our best hope for getting the ENGLISH definition of the word
-		# is to look for headings of the form "==English==\n", then try to pull out everything between them
-		# and the next heading of the same form (or the end of the content, whatever comes first)
-	
+	return wordsOut
+		
 	
 
 def create_model():
@@ -246,6 +286,10 @@ if __name__ == "__main__":
 		model = create_model()
 		text, vidPath = create_tweet(model)
 		tweet(text, vidPath)
+		#wordsFile = open("words.txt", "r")
+		#words = wordsFile.read()
+		#wordsOut = classifyVocabulary(words)
+		#print(wordsOut)
 	except Exception as e:
 		log("\n" + e.message + "\n")
 	if (justWokeUp()):
