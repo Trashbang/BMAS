@@ -12,6 +12,7 @@ import win32evtlog
 import mwapi
 import json
 import re
+
 from secrets import *
 from time import gmtime, strftime, localtime
 
@@ -23,7 +24,6 @@ logfile_name = bot_username + ".log"
 # ==============================================================
 
 # Non-speech elements (i.e. should not be part of readable output
-
 noises = ("bizwarn", "bloop", "buzwarn", "buzzwarn", "dadeda", "deeoo", "doop", "woop")
 
 # Files containing these should be ignored completely (why are they even here???)
@@ -57,55 +57,67 @@ def classifyVocabulary(words):
 			queryWords = queryWords[1:] # hack off that leading pipe
 			print("Querying Wiktionary with words: " + queryWords)
 			query = session.get(action='query', prop='revisions', rvprop='content', format='json', formatversion='2', titles=queryWords)
-			pages.append(query['query']['pages'][0]) # The actual pages are buried a little bit into the json 
+			for page in query['query']['pages']: # The actual pages are buried a little bit into the json 
+				pages.append(page) 
 			queryWords = ""
 
 	# Go through pages and get word definitions
 	for page in pages:
 		word = page['title']
 		if ('missing' not in page): # 'missing' is a key given to pages that fail to return results (weird names, etc)
-			print("Classifying word: " + word)
 			pageContent = page['revisions'][0]['content'] # Grab the content of the most recent revision (a.k.a the only revision we pulled)
 			
-			# Okay, here's where it gets messy.
+			# Okay, here's where it gets sketchy.
 			# Wikitext is non-hierarchical. Thus, our best hope for getting the ENGLISH definition of the word
 			# is to look for headings of the form "==English==", then try to pull out everything between them
 			# and the next heading of the same form (or the end of the content, whatever comes first)
-			openHeading = "[^=]==English==[^=]"
-			closeHeading = "[^=]==[^=]*==[^=]|\Z"
+			openHeading = r"==English==\n"
+			closeHeading = r"\n==([^=])*==\n"
 			subsection = ""
 			startPoint = re.search(openHeading, pageContent)
 			if (startPoint is not None):
+
 				endPoint = re.search(closeHeading, pageContent[startPoint.end():])
-				subsection = pageContent[startPoint.end():endPoint.start()] # wow, that's almost beautiful
+				if (endPoint is None):
+					subsection = pageContent[startPoint.end():] # just search the whole thing from ==English== onward
+
+				else:
+					subsection = pageContent[startPoint.end():endPoint.end()] # wow, that's almost beautiful
 			
 			# Now we take our English subsection and see which lexical types show up.
 			# The applicable lexical categories of word, as notated by Wiktionary, are:
 			# - en-adj (adjectives)
 			# - en-adv (adverbs)
 			# - en-con (conjunctions)
-			# - en-noun (noun)
+			# - en-det (determiners)
+			# - en-noun (nouns)
+			# - en-prep (prepositions)
 			# - en-proper noun (proper nouns, like names)
 			# - en-pron (pronouns)
 			# - en-verb (verbs)
 			# Surely there's a neater way to do this than a big list of conditionals?
 			lexTypes = []
-			if ("en-adj" in subsection):
+			if ("en-adj" in subsection) or ("===Adjective===" in subsection):
 				lexTypes.append("en-adj")
-			if ("en-adv" in subsection):
+			if ("en-adv" in subsection) or ("===Adverb===" in subsection):
 				lexTypes.append("en-adv")
-			if ("en-con" in subsection):
-				lexTypes.append("en-con")
-			if ("en-noun" in subsection):
+			if ("en-con" in subsection) or ("===Conjunction===" in subsection):
+				lexTypes.append("en-con") 
+			if ("en-det" in subsection) or ("===Determiner===" in subsection):
+				lexTypes.append("en-det") 
+			if ("en-noun" in subsection) or ("===Noun===" in subsection):
 				lexTypes.append("en-noun")
-			if ("en-proper noun" in subsection):
+			if ("en-prep" in subsection) or ("===Preposition===" in subsection):
+				lexTypes.append("en-prep")
+			if ("en-proper noun" in subsection) or ("===Proper noun===" in subsection):
 				lexTypes.append("en-proper noun")
-			if ("en-pron" in subsection):
+			if ("en-pron" in subsection) or ("===Pronoun===" in subsection):
 				lexTypes.append("en-pron")
-			if ("en-verb" in subsection):
+			if ("en-verb" in subsection) or ("===Verb===" in subsection):
 				lexTypes.append("en-verb")
 			
 			wordsOut.update({word:lexTypes})
+			input("Classified " + word + " as " + str(lexTypes))
 		else:
 			print("Passing over word: " + word + " (No page found)")
 		
@@ -289,7 +301,8 @@ if __name__ == "__main__":
 		#wordsFile = open("words.txt", "r")
 		#words = wordsFile.read()
 		#wordsOut = classifyVocabulary(words)
-		#print(wordsOut)
+		#for entry in wordsOut.items():
+		#	print(entry)
 	except Exception as e:
 		log("\n" + e.message + "\n")
 	if (justWokeUp()):
