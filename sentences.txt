@@ -224,6 +224,6 @@ attention _comma supply team required in lower maintenance chamber sub sector b
 doop security breach detected in silo thirty two
 warning _comma extreme radiation leak detected in reactor core eight _comma time to reach minimum safe distance _comma fourteen minutes
 dadeda doctor guthrie report to inspection lab six immediately
-attention _comma doctor Freeman report to research administration center for questioning
+attention _comma doctor freeman report to research administration center for questioning
 deeoo remaining science personnel report to medical lab six for radiation exposure inspection
 warning _comma severe damage detected in ventillation systems under research lab two _comma evacuate area immediately

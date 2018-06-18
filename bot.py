@@ -45,9 +45,10 @@ def classifyVocabulary(words):
 	# take out noises so we don't stump Wiktionary with our dubious onomatopoeia
 	for noise in noises:
 		wordsList.remove(noise)
+	wordsList.remove("_comma")
 	
 	# The MediaWiki API only lets us pull up to fifty pages at a time, so we need to break this up into a few queries
-	for wordIdx in range(len(wordsList) - 1): # it's counterintuitive, but we gotta track the index for modulus
+	for wordIdx in range(len(wordsList)): # it's counterintuitive, but we gotta track the index for modulus
 		queryWords = queryWords + "|" + wordsList[wordIdx]
 		if (((wordIdx + 1) % 50 == 0) or (wordIdx + 1) == len(wordsList)): # Only once every fifty words, or when we reach the end
 			# Check https://www.mediawiki.org/wiki/API and https://pythonhosted.org/mwapi
@@ -117,13 +118,59 @@ def classifyVocabulary(words):
 				lexTypes.append("en-verb")
 			
 			wordsOut.update({word:lexTypes})
-			input("Classified " + word + " as " + str(lexTypes))
+			#print("Classified " + word + " as " + str(lexTypes))
 		else:
-			print("Passing over word: " + word + " (No page found)")
+			#print("Passing over word: " + word + " (No page found)")
+			wordsOut.update({word:[]}) # Just a dummy so the word still appears in our lexicon
 		
 	return wordsOut
 		
+def madlibify(message, lexicon, baseProbability):
+	# Take a message and potentially swap out words for grammatically similar words,
+	# according to the supplied lexicon and probability
+	words = message.split(" ")
+	wordsOut = ""
+	for word in words:
+		if (word not in noises) and (word != '_comma'): # just don't touch these, mmkay?
+			types = lexicon[word]
+			
+			# Since we can't guess the intended usage of the word,
+			# (at least, not without some kind of AI model that looks at the context)
+			# we simply try to favour words with less ambiguous applications (i.e. fewer types)
+			if (len(types) == 0):
+				weightedProbability = 0
+			else:
+				weightedProbability = baseProbability / len(types)
+			if (random.random() < weightedProbability):
+				# Okay, we've committed to swapping this word.
+				# Again, we can't know what the intended use is,
+				# so we just pick one at random to match against our vocabulary
+				chosenType = random.choice(types)
+				print("Swapping word " + word + " as a " + chosenType)
+				
+				# Populate a new list with words that we could potentially swap with
+				replacements = {}
+				for candidate, candidateTypes in lexicon.items():
+					if (chosenType in candidateTypes):
+						replacements.update({candidate:candidateTypes})
+				
+				# Randomly choose a swappable word. 
+				# Once again, we favour words with fewer applications,
+				# hence why our initial choice may 'fail'
+				chosen = False
+				while (chosen == False):
+					candidate = random.choice(list(replacements.keys())) # We can only choose from a 'sequence' (lists, tuples, strings, some other stuff)
+					if (random.choice(replacements[candidate]) == chosenType): # This will resolve to false more often on words with more lexical types
+						wordsOut = wordsOut + " " + candidate
+						chosen = True
+						print("Swapped for " + candidate)
+			else:
+				# Just append the word as-is
+				wordsOut = wordsOut + " " + word
+		else:
+			wordsOut = wordsOut + " " + word
 	
+	return wordsOut
 
 def create_model():
 	# get the list of (canonical) sentences spoken by vox
@@ -169,17 +216,13 @@ def create_tweet(model):
 		if (sentenceText is not None):
 			isValid = True
 			
-	# randomly replace a small percentage of words, for b-b-b-bonus chaos
-	wordsFile = open("words.txt", "r")
-	words = wordsFile.read()
-	wordsList = words.split("\n")
-	sentenceWords = sentenceText.split(" ")
-	sentenceText = ""
-	for word in sentenceWords:
-		if (random.random() < 0.02):
-			sentenceText = sentenceText + wordsList[random.randrange(0, len(wordsList)-1)] + " "
-		else:
-			sentenceText = sentenceText + word + " "
+	# Create a lexicon of the types of words used
+	#wordsFile = open("words.txt", "r")
+	#words = wordsFile.read()
+	#lexicon = classifyVocabulary(words)
+	
+	# Use that lexicon to swap out a percentage of words
+	#sentenceText = madlibify(sentenceText, lexicon, 0.2)
 	
 	# clean up text presentation
 	niceText = sentenceText.upper()
