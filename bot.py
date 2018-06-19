@@ -29,7 +29,7 @@ noises = ("bizwarn", "bloop", "buzwarn", "buzzwarn", "dadeda", "deeoo", "doop", 
 # Files containing these should be ignored completely (why are they even here???)
 ignoreFiles = ("asay", "endgame", "gotquad", "sack", "sreq", "ssay", "voxlogin")
 
-def classifyVocabulary(words):
+def generateLexicon(words):
 	# Take a list of all the words spoken by the system and classify them (noun, adj, etc).
 	# This will allow us to augment the Markov chain model by drawing parallels between words that
 	# can be potentially swapped out while still retaining grammatical sanity.
@@ -171,6 +171,15 @@ def madlibify(message, lexicon, baseProbability):
 			wordsOut = wordsOut + " " + word
 	
 	return wordsOut
+	
+def saveLexicon(lexicon, filename):
+	# Translate our lexicon to a JSON string and save it to file
+	# (This saves us the lengthy hassle of querying Wiktionary every time we run)
+	json.dump(lexicon, open(filename, "w"))
+	
+def loadLexicon(filename):
+	# Pull lexicon from file (make sure to generate and save one first, ofc)
+	return json.load(open(filename, "r"))
 
 def create_model():
 	# get the list of (canonical) sentences spoken by vox
@@ -212,17 +221,20 @@ def create_tweet(model):
 	sentenceText = None
 	isValid = False
 	while (isValid is False):	
-		sentenceText = model.make_short_sentence(200)
+		sentenceText = model.make_short_sentence(160)
 		if (sentenceText is not None):
 			isValid = True
 			
 	# Create a lexicon of the types of words used
-	#wordsFile = open("words.txt", "r")
-	#words = wordsFile.read()
-	#lexicon = classifyVocabulary(words)
+	wordsFile = open("words.txt", "r")
+	words = wordsFile.read()
+	#lexicon = generateLexicon(words)
+	
+	#saveLexicon(lexicon, "lexicon.txt")
+	lexicon = loadLexicon("lexicon.txt")
 	
 	# Use that lexicon to swap out a percentage of words
-	#sentenceText = madlibify(sentenceText, lexicon, 0.2)
+	sentenceText = madlibify(sentenceText, lexicon, 0.1)
 	
 	# clean up text presentation
 	niceText = sentenceText.upper()
@@ -341,11 +353,6 @@ if __name__ == "__main__":
 		model = create_model()
 		text, vidPath = create_tweet(model)
 		tweet(text, vidPath)
-		#wordsFile = open("words.txt", "r")
-		#words = wordsFile.read()
-		#wordsOut = classifyVocabulary(words)
-		#for entry in wordsOut.items():
-		#	print(entry)
 	except Exception as e:
 		log("\n" + e.message + "\n")
 	if (justWokeUp()):
